@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# versione 2020.08.19.001
+# versione 2020.08.19.002
 #
 ##############################################################################
 #
@@ -21,6 +21,8 @@ DIFF=$(diff $cert_orig/cert.pem $cert_dest/https-cert.pem)
 
 if [ "$DIFF" != "" ]
 then
+  echo "Eseguo aggiornamento certificati"
+  
   # elimino vecchi salvataggi
   rm $cert_dest/https-cert.pem.bk
   rm $cert_dest/https-key.pem.bk
@@ -34,15 +36,17 @@ then
   cp $cert_orig/privkey.pem $cert_dest/https-key.pem
   
   # imposto le autorizzazioni
+  echo "Imposto autorizzazioni file"
   chown sc-syncthing:syncthing $cert_dest/https-cert.pem
   chown sc-syncthing:syncthing $cert_dest/https-key.pem
   chmod 640 $cert_dest/https-cert.pem
   chmod 600 $cert_dest/https-key.pem
   
   # riavvio servizio Syncthing
-  synoservicecfg --status pkgctl-syncthing
+  echo "Riavvio servizio Syncthing"
+  synoservicecfg --restart pkgctl-syncthing
 else 
-  echo "Nulla da fare"
+  echo "Nulla da fare!"
 fi
 
 
