@@ -1,10 +1,12 @@
 #!/bin/bash
 #
-# versione 2020.08.18.001
+# versione 2020.08.19.001
 #
 ##############################################################################
 #
 # allineamento certificato Synology > Synthing 
+# eseguire come root
+# check status synoservicecfg --status pkgctl-syncthing
 
 # verifico se certificati origine sono diversi da quelli di Syncthing (diff)
 
@@ -38,7 +40,7 @@ then
   chmod 600 $cert_dest/https-key.pem
   
   # riavvio servizio Syncthing
-  # DA FARE
+  synoservicecfg --status pkgctl-syncthing
 else 
   echo "Nulla da fare"
 fi
