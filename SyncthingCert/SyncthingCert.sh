@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# versione 2020.08.23.001
+# versione 2024.04.10.003
 #
 ##############################################################################
 #
@@ -10,7 +10,7 @@
 
 # imposto percorso certificati / set certificates path 
 cert_orig="/usr/syno/etc/certificate/system/default"
-cert_dest="/volume1/@appstore/syncthing/var"
+cert_dest="/volume1/@appdata/syncthing"
 readonly cert_orig
 readonly cert_dest
 
@@ -44,14 +44,14 @@ then
   
   # imposto le autorizzazioni / set permissions
   echo "Imposto autorizzazioni file / Set permissions"
-  chown sc-syncthing:syncthing $cert_dest/https-cert.pem
-  chown sc-syncthing:syncthing $cert_dest/https-key.pem
+  chown sc-syncthing:sc-syncthing $cert_dest/https-cert.pem
+  chown sc-syncthing:sc-syncthing $cert_dest/https-key.pem
   chmod 640 $cert_dest/https-cert.pem
   chmod 600 $cert_dest/https-key.pem
   
   # riavvio servizio Syncthing / restart Syncthing service
   echo "Riavvio servizio Syncthing / Restart Syncthing service"
-  synoservicecfg --restart pkgctl-syncthing
+  systemctl restart pkgctl-syncthing
 else 
   echo "Nulla da fare! / Nothing to do!"
 fi
